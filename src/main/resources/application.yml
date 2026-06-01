@@ -1,0 +1,163 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: task-push-platform
+  profiles:
+    active: dev
+
+  # ==================== DataSource (MySQL 8 + Druid) ====================
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/task_push_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      filter:
+        stat:
+          enabled: true
+          log-slow-sql: true
+          slow-sql-millis: 2000
+        wall:
+          enabled: true
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: admin
+        login-password: admin
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+
+  # ==================== Redis ====================
+  redis:
+    host: localhost
+    port: 6379
+    password:
+    database: 0
+    timeout: 5000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1ms
+
+  # ==================== RabbitMQ ====================
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    # 消息确认
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+        prefetch: 1
+        concurrency: 5
+        max-concurrency: 10
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 3000ms
+
+  # ==================== Servlet / Multipart ====================
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  # ==================== Jackson ====================
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+    serialization:
+      write-dates-as-timestamps: false
+
+# ==================== MyBatis-Plus ====================
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: com.taskpush.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      update-strategy: not_null
+
+# ==================== JWT ====================
+jwt:
+  secret: YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwYWJjZGVmZ2hpamtsbW5vcA==
+  expiration: 86400000  # 24 hours (ms)
+
+# ==================== MinIO ====================
+minio:
+  endpoint: http://localhost:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket-name: task-push
+  secure: false
+
+# ==================== XXL-JOB ====================
+xxl:
+  job:
+    admin:
+      addresses: http://localhost:8088/xxl-job-admin
+    access-token: default_token
+    executor:
+      appname: task-push-platform
+      address:
+      ip:
+      port: 9999
+      log-path: ./logs/xxl-job
+      log-retention-days: 30
+
+# ==================== Knife4j (Swagger) ====================
+knife4j:
+  enable: true
+  setting:
+    language: zh-CN
+  openapi:
+    title: Task Push Platform API
+    description: 任务推送平台接口文档
+    version: 1.0.0
+    concat: dev-team
+    group:
+      default:
+        group-name: default
+        api-rule: package
+        api-rule-resources:
+          - com.taskpush.controller
+
+# ==================== Logging ====================
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    root: INFO
+    com.taskpush: DEBUG
+    org.springframework.security: WARN
+    com.baomidou.mybatisplus: DEBUG

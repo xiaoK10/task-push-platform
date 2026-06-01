@@ -1,0 +1,28 @@
+# ==================== IDE ====================
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+*.swp
+*.swo
+*~
+
+# ==================== Maven ====================
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# ==================== OS ====================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ==================== Logs ====================
+logs/
+*.log
+
+# ==================== Temp ====================
+*.tmp
+*.bak
+*.cache
