@@ -1,0 +1,76 @@
+<view class="container">
+  <view class="form-section">
+    <view class="form-item">
+      <text class="form-label">任务标题</text>
+      <input class="form-input" placeholder="请输入任务标题" bindinput="onTitleInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">任务分类</text>
+      <view class="category-options">
+        <view 
+          class="category-option {{formData.category === 1 ? 'active' : ''}}" 
+          bindtap="selectCategory" 
+          data-category="1"
+        >新媒体</view>
+        <view 
+          class="category-option {{formData.category === 2 ? 'active' : ''}}" 
+          bindtap="selectCategory" 
+          data-category="2"
+        >电商运营</view>
+        <view 
+          class="category-option {{formData.category === 3 ? 'active' : ''}}" 
+          bindtap="selectCategory" 
+          data-category="3"
+        >办公文职</view>
+        <view 
+          class="category-option {{formData.category === 4 ? 'active' : ''}}" 
+          bindtap="selectCategory" 
+          data-category="4"
+        >创意设计</view>
+        <view 
+          class="category-option {{formData.category === 5 ? 'active' : ''}}" 
+          bindtap="selectCategory" 
+          data-category="5"
+        >其他</view>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">任务描述</text>
+      <textarea class="form-textarea" placeholder="请描述任务内容和要求" bindinput="onDescInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">操作步骤</text>
+      <textarea class="form-textarea" placeholder="请描述具体操作步骤，每行一步" bindinput="onStepsInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">验收标准</text>
+      <textarea class="form-textarea" placeholder="请描述任务验收标准" bindinput="onCriteriaInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">截止时间</text>
+      <picker mode="date" bindchange="onDeadlineChange">
+        <view class="form-input">{{formData.deadline || '请选择截止日期'}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">单任务佣金</text>
+      <view class="price-input">
+        <text class="price-symbol">¥</text>
+        <input class="price-input-box" type="digit" placeholder="0.00" bindinput="onCommissionInput" />
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">可接人数</text>
+      <input class="form-input" type="number" placeholder="请输入可接人数" bindinput="onMaxWorkersInput" />
+    </view>
+  </view>
+
+  <view class="submit-btn" bindtap="handleSubmit">发布任务</view>
+</view>

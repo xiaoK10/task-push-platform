@@ -1,0 +1,84 @@
+.container {
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding-bottom: 140rpx;
+}
+
+.section {
+  background-color: #fff;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.type-options {
+  display: flex;
+  gap: 20rpx;
+}
+
+.type-option {
+  flex: 1;
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  border-radius: 12rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.type-option.active {
+  background-color: #4a90d9;
+  color: #fff;
+}
+
+.dispute-textarea {
+  width: 100%;
+  height: 300rpx;
+  background-color: #f5f5f5;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+}
+
+.upload-area {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.upload-btn {
+  width: 160rpx;
+  height: 160rpx;
+  background-color: #f5f5f5;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+  color: #999;
+}
+
+.submit-btn {
+  position: fixed;
+  bottom: 0;
+  left: 20rpx;
+  right: 20rpx;
+  height: 88rpx;
+  background-color: #4a90d9;
+  color: #fff;
+  border-radius: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  font-weight: 500;
+  margin-bottom: 20rpx;
+}

@@ -1,0 +1,79 @@
+<view class="container">
+  <view class="header">
+    <view class="search-bar">
+      <input class="search-input" placeholder="搜索任务" bindinput="onSearchInput" />
+      <view class="search-btn" bindtap="handleSearch">搜索</view>
+    </view>
+    <scroll-view scroll-x class="category-scroll">
+      <view class="category-list">
+        <view 
+          class="category-item {{currentCategory === null ? 'active' : ''}}" 
+          bindtap="selectCategory" 
+          data-category=""
+        >
+          全部
+        </view>
+        <view 
+          class="category-item {{currentCategory === 1 ? 'active' : ''}}" 
+          bindtap="selectCategory" 
+          data-category="1"
+        >
+          新媒体
+        </view>
+        <view 
+          class="category-item {{currentCategory === 2 ? 'active' : ''}}" 
+          bindtap="selectCategory" 
+          data-category="2"
+        >
+          电商运营
+        </view>
+        <view 
+          class="category-item {{currentCategory === 3 ? 'active' : ''}}" 
+          bindtap="selectCategory" 
+          data-category="3"
+        >
+          办公文职
+        </view>
+        <view 
+          class="category-item {{currentCategory === 4 ? 'active' : ''}}" 
+          bindtap="selectCategory" 
+          data-category="4"
+        >
+          创意设计
+        </view>
+        <view 
+          class="category-item {{currentCategory === 5 ? 'active' : ''}}" 
+          bindtap="selectCategory" 
+          data-category="5"
+        >
+          其他
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="task-list">
+    <view 
+      class="task-card" 
+      wx:for="{{taskList}}" 
+      wx:key="id" 
+      bindtap="goToTaskDetail" 
+      data-task-id="{{item.id}}"
+    >
+      <view class="task-header">
+        <view class="task-category">{{getCategoryName(item.category)}}</view>
+        <view class="task-commission">¥{{item.commission}}</view>
+      </view>
+      <view class="task-title">{{item.title}}</view>
+      <view class="task-desc">{{item.description}}</view>
+      <view class="task-footer">
+        <view class="task-deadline">截止: {{formatTime(item.deadline)}}</view>
+        <view class="task-remaining">剩余{{item.remainingWorkers}}人</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>
