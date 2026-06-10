@@ -1,0 +1,11 @@
+{
+  "name": "crowdsourcing-miniprogram",
+  "version": "1.0.0",
+  "description": "安企付众包任务管理系统 - 微信小程序",
+  "scripts": {
+    "dev": "miniprogram-cli serve",
+    "build": "miniprogram-cli build"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

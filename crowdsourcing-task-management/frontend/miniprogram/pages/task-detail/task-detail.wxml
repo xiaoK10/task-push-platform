@@ -1,0 +1,42 @@
+<view class="container">
+  <view class="task-header" wx:if="{{task}}">
+    <view class="task-title">{{task.title}}</view>
+    <view class="task-meta">
+      <view class="meta-item">{{getCategoryName(task.category)}}</view>
+      <view class="meta-item">¥{{task.commission}}</view>
+      <view class="meta-item">剩余{{task.remainingWorkers}}人</view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">任务详情</view>
+    <view class="section-content">{{task?.description}}</view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">操作步骤</view>
+    <view class="steps-list">
+      <view class="step-item" wx:for="{{steps}}" wx:key="index">
+        <view class="step-num">{{index + 1}}</view>
+        <view class="step-text">{{item}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">验收标准</view>
+    <view class="section-content">{{task?.acceptanceCriteria}}</view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">截止时间</view>
+    <view class="deadline-info">{{formatDeadline(task?.deadline)}}</view>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="action-btn secondary" bindtap="handleFavorite">
+      {{isFavorited ? '已收藏' : '收藏'}}
+    </view>
+    <view class="action-btn primary" bindtap="handleAccept">立即接单</view>
+  </view>
+</view>

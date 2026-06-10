@@ -1,0 +1,52 @@
+<view class="container">
+  <view class="order-header" wx:if="{{order}}">
+    <view class="order-title">{{order.taskTitle}}</view>
+    <view class="order-status">{{getStatusText(order.status)}}</view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">任务信息</view>
+    <view class="info-item">
+      <text class="info-label">佣金金额</text>
+      <text class="info-value">¥{{order?.commission}}</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">接单时间</text>
+      <text class="info-value">{{formatTime(order?.createdAt)}}</text>
+    </view>
+    <view class="info-item" wx:if="{{order?.deliveryTime}}">
+      <text class="info-label">提交时间</text>
+      <text class="info-value">{{formatTime(order?.deliveryTime)}}</text>
+    </view>
+    <view class="info-item" wx:if="{{order?.auditTime}}">
+      <text class="info-label">审核时间</text>
+      <text class="info-value">{{formatTime(order?.auditTime)}}</text>
+    </view>
+    <view class="info-item" wx:if="{{order?.rejectReason}}">
+      <text class="info-label">驳回原因</text>
+      <text class="info-value reject">{{order.rejectReason}}</text>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{order?.deliveryContent}}">
+    <view class="section-title">已提交内容</view>
+    <view class="delivery-content">{{order.deliveryContent}}</view>
+  </view>
+
+  <view class="section" wx:if="{{showSubmit}}">
+    <view class="section-title">提交任务成果</view>
+    <textarea 
+      class="submit-textarea" 
+      placeholder="请输入任务完成情况，可描述操作步骤、上传截图链接等"
+      bindinput="onContentInput"
+    />
+  </view>
+
+  <view class="bottom-bar" wx:if="{{showSubmit}}">
+    <view class="action-btn primary" bindtap="handleSubmit">提交任务</view>
+  </view>
+
+  <view class="bottom-bar" wx:if="[[order?.status === 5]]">
+    <view class="action-btn primary" bindtap="goToDispute">发起申诉</view>
+  </view>
+</view>
