@@ -11,7 +11,6 @@ import com.aieppay.task.mapper.FundFlowMapper;
 import com.aieppay.task.mapper.UserBalanceMapper;
 import com.aieppay.task.mapper.UserInfoMapper;
 import com.aieppay.task.service.FundService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,15 +20,20 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
-@RequiredArgsConstructor
 public class FundServiceImpl implements FundService {
 
-    private final UserBalanceMapper userBalanceMapper;
-    private final FundFlowMapper fundFlowMapper;
-    private final UserInfoMapper userInfoMapper;
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+
+    private UserBalanceMapper userBalanceMapper;
+    @Autowired
+    private FundFlowMapper fundFlowMapper;
+    @Autowired
+    private UserInfoMapper userInfoMapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional

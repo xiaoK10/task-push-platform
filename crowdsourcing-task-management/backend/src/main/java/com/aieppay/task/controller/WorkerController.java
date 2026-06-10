@@ -9,21 +9,25 @@ import com.aieppay.task.service.FundService;
 import com.aieppay.task.service.OrderService;
 import com.aieppay.task.service.TaskService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 @RequestMapping("/api/worker")
-@RequiredArgsConstructor
 public class WorkerController {
 
-    private final TaskService taskService;
-    private final OrderService orderService;
-    private final FundService fundService;
-    private final DisputeService disputeService;
+    @Autowired
+
+    private TaskService taskService;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private FundService fundService;
+    @Autowired
+    private DisputeService disputeService;
 
     @GetMapping("/tasks")
     public ResponseEntity<ApiResponse<List<TaskListResponse>>> getOnlineTasks(
@@ -43,7 +47,7 @@ public class WorkerController {
     public ResponseEntity<ApiResponse<Void>> acceptTask(@PathVariable Long workerId,
                                                        @PathVariable Long taskId) {
         orderService.acceptTask(workerId, taskId);
-        return ResponseEntity.ok(ApiResponse.success("接单成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("接单成功"));
     }
 
     @GetMapping("/{workerId}/orders")
@@ -65,7 +69,7 @@ public class WorkerController {
                                                         @PathVariable Long orderId,
                                                         @RequestBody String deliveryContent) {
         orderService.submitOrder(workerId, orderId, deliveryContent);
-        return ResponseEntity.ok(ApiResponse.success("提交成功，等待审核"));
+        return ResponseEntity.ok(ApiResponse.successMessage("提交成功，等待审核"));
     }
 
     @PostMapping("/{workerId}/orders/{orderId}/retry")
@@ -73,14 +77,14 @@ public class WorkerController {
                                                        @PathVariable Long orderId,
                                                        @RequestBody String deliveryContent) {
         orderService.retrySubmit(workerId, orderId, deliveryContent);
-        return ResponseEntity.ok(ApiResponse.success("重新提交成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("重新提交成功"));
     }
 
     @PostMapping("/{workerId}/orders/{orderId}/cancel")
     public ResponseEntity<ApiResponse<Void>> cancelOrder(@PathVariable Long workerId,
                                                        @PathVariable Long orderId) {
         orderService.cancelOrder(workerId, orderId);
-        return ResponseEntity.ok(ApiResponse.success("取消成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("取消成功"));
     }
 
     @GetMapping("/{workerId}/balance")
@@ -92,7 +96,7 @@ public class WorkerController {
     public ResponseEntity<ApiResponse<Void>> withdraw(@PathVariable Long workerId,
                                                      @Valid @RequestBody WithdrawRequest request) {
         fundService.withdraw(workerId, request);
-        return ResponseEntity.ok(ApiResponse.success("提现申请成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("提现申请成功"));
     }
 
     @PostMapping("/{workerId}/disputes")

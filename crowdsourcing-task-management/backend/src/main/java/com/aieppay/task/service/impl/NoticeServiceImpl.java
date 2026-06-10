@@ -4,17 +4,18 @@ import com.aieppay.task.entity.SystemNotice;
 import com.aieppay.task.exception.ServiceException;
 import com.aieppay.task.mapper.SystemNoticeMapper;
 import com.aieppay.task.service.NoticeService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
-@RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
 
-    private final SystemNoticeMapper systemNoticeMapper;
+    @Autowired
+
+    private SystemNoticeMapper systemNoticeMapper;
 
     @Override
     @Transactional

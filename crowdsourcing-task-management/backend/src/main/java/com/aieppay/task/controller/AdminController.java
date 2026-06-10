@@ -8,21 +8,25 @@ import com.aieppay.task.service.DisputeService;
 import com.aieppay.task.service.NoticeService;
 import com.aieppay.task.service.TaskService;
 import com.aieppay.task.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 @RequestMapping("/api/admin")
-@RequiredArgsConstructor
 public class AdminController {
 
-    private final UserService userService;
-    private final TaskService taskService;
-    private final DisputeService disputeService;
-    private final NoticeService noticeService;
+    @Autowired
+
+    private UserService userService;
+    @Autowired
+    private TaskService taskService;
+    @Autowired
+    private DisputeService disputeService;
+    @Autowired
+    private NoticeService noticeService;
 
     @GetMapping("/users")
     public ResponseEntity<ApiResponse<List<UserInfo>>> getAllUsers(
@@ -39,13 +43,13 @@ public class AdminController {
     @PutMapping("/users/{userId}/status")
     public ResponseEntity<ApiResponse<Void>> updateUserStatus(@PathVariable Long userId,
                                                              @RequestParam Integer status) {
-        return ResponseEntity.ok(ApiResponse.success("状态更新成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("状态更新成功"));
     }
 
     @PutMapping("/users/{userId}/credit")
     public ResponseEntity<ApiResponse<Void>> updateCreditScore(@PathVariable Long userId,
                                                               @RequestParam Integer creditScore) {
-        return ResponseEntity.ok(ApiResponse.success("信誉分更新成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("信誉分更新成功"));
     }
 
     @GetMapping("/tasks/pending-audit")
@@ -59,7 +63,7 @@ public class AdminController {
                                                               @RequestParam Integer result,
                                                               @RequestParam(required = false) String rejectReason) {
         taskService.platformAuditTask(taskId, result, rejectReason);
-        return ResponseEntity.ok(ApiResponse.success("审核完成"));
+        return ResponseEntity.ok(ApiResponse.successMessage("审核完成"));
     }
 
     @GetMapping("/disputes/pending")
@@ -80,7 +84,7 @@ public class AdminController {
                                                            @RequestParam Integer result,
                                                            @RequestBody String resultContent) {
         disputeService.processDispute(adminId, disputeId, result, resultContent);
-        return ResponseEntity.ok(ApiResponse.success("仲裁完成"));
+        return ResponseEntity.ok(ApiResponse.successMessage("仲裁完成"));
     }
 
     @GetMapping("/disputes/statistics")
@@ -93,7 +97,7 @@ public class AdminController {
                                                          @RequestBody String content,
                                                          @RequestParam Integer type) {
         noticeService.createNotice(title, content, type);
-        return ResponseEntity.ok(ApiResponse.success("公告创建成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("公告创建成功"));
     }
 
     @PutMapping("/notices/{noticeId}")
@@ -102,13 +106,13 @@ public class AdminController {
                                                          @RequestBody(required = false) String content,
                                                          @RequestParam(required = false) Integer status) {
         noticeService.updateNotice(noticeId, title, content, status);
-        return ResponseEntity.ok(ApiResponse.success("公告更新成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("公告更新成功"));
     }
 
     @DeleteMapping("/notices/{noticeId}")
     public ResponseEntity<ApiResponse<Void>> deleteNotice(@PathVariable Long noticeId) {
         noticeService.deleteNotice(noticeId);
-        return ResponseEntity.ok(ApiResponse.success("公告删除成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("公告删除成功"));
     }
 
     @GetMapping("/notices")

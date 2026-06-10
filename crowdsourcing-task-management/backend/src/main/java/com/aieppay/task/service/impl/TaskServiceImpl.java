@@ -10,19 +10,21 @@ import com.aieppay.task.mapper.TaskInfoMapper;
 import com.aieppay.task.mapper.UserBalanceMapper;
 import com.aieppay.task.service.TaskService;
 import com.alibaba.fastjson.JSON;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
-@RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
 
-    private final TaskInfoMapper taskInfoMapper;
-    private final UserBalanceMapper userBalanceMapper;
+    @Autowired
+
+    private TaskInfoMapper taskInfoMapper;
+    @Autowired
+    private UserBalanceMapper userBalanceMapper;
 
     @Override
     @Transactional

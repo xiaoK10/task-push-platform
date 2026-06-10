@@ -1,11 +1,9 @@
 package com.aieppay.task.exception;
 
-import lombok.Getter;
 
-@Getter
 public class ServiceException extends RuntimeException {
 
-    private final Integer code;
+    private Integer code;
 
     public ServiceException(String message) {
         super(message);
@@ -24,4 +22,6 @@ public class ServiceException extends RuntimeException {
     public static ServiceException of(Integer code, String message) {
         return new ServiceException(code, message);
     }
+
+    public Integer getCode() { return code; }
 }

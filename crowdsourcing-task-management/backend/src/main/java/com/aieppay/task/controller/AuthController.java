@@ -6,16 +6,17 @@ import com.aieppay.task.dto.response.ApiResponse;
 import com.aieppay.task.dto.response.UserInfoResponse;
 import com.aieppay.task.service.UserService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 @RequestMapping("/api/auth")
-@RequiredArgsConstructor
 public class AuthController {
 
-    private final UserService userService;
+    @Autowired
+
+    private UserService userService;
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<UserInfoResponse>> wxLogin(@Valid @RequestBody WxLoginRequest request) {
@@ -27,7 +28,7 @@ public class AuthController {
     public ResponseEntity<ApiResponse<Void>> realNameAuth(@PathVariable Long userId, 
                                                           @Valid @RequestBody RealNameAuthRequest request) {
         userService.realNameAuth(userId, request);
-        return ResponseEntity.ok(ApiResponse.success("提交成功，请等待审核"));
+        return ResponseEntity.ok(ApiResponse.successMessage("提交成功，请等待审核"));
     }
 
     @GetMapping("/{userId}/info")
@@ -40,7 +41,7 @@ public class AuthController {
     public ResponseEntity<ApiResponse<Void>> switchIdentity(@PathVariable Long userId, 
                                                             @RequestParam Integer identityType) {
         userService.switchIdentity(userId, identityType);
-        return ResponseEntity.ok(ApiResponse.success("身份切换成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("身份切换成功"));
     }
 
     @PutMapping("/{userId}/info")
@@ -48,7 +49,7 @@ public class AuthController {
                                                            @RequestParam(required = false) String nickName,
                                                            @RequestParam(required = false) String avatar) {
         userService.updateUserInfo(userId, nickName, avatar);
-        return ResponseEntity.ok(ApiResponse.success("更新成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("更新成功"));
     }
 
     @PutMapping("/{userId}/password")
@@ -56,7 +57,7 @@ public class AuthController {
                                                            @RequestParam String oldPassword,
                                                            @RequestParam String newPassword) {
         userService.updateWithdrawPassword(userId, oldPassword, newPassword);
-        return ResponseEntity.ok(ApiResponse.success("密码修改成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("密码修改成功"));
     }
 
     @PutMapping("/{userId}/bind-account")
@@ -65,18 +66,18 @@ public class AuthController {
                                                         @RequestParam(required = false) String bankName,
                                                         @RequestParam(required = false) String alipayAccount) {
         userService.bindWithdrawAccount(userId, bankCard, bankName, alipayAccount);
-        return ResponseEntity.ok(ApiResponse.success("绑定成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("绑定成功"));
     }
 
     @PostMapping("/{userId}/logout")
     public ResponseEntity<ApiResponse<Void>> logout(@PathVariable Long userId) {
         userService.logout(userId);
-        return ResponseEntity.ok(ApiResponse.success("退出成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("退出成功"));
     }
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<ApiResponse<Void>> deleteAccount(@PathVariable Long userId) {
         userService.deleteAccount(userId);
-        return ResponseEntity.ok(ApiResponse.success("注销成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("注销成功"));
     }
 }

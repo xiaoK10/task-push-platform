@@ -9,20 +9,23 @@ import com.aieppay.task.service.FundService;
 import com.aieppay.task.service.OrderService;
 import com.aieppay.task.service.TaskService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 @RequestMapping("/api/employer")
-@RequiredArgsConstructor
 public class EmployerController {
 
-    private final TaskService taskService;
-    private final OrderService orderService;
-    private final FundService fundService;
+    @Autowired
+
+    private TaskService taskService;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private FundService fundService;
 
     @PostMapping("/{employerId}/tasks")
     public ResponseEntity<ApiResponse<Long>> createTask(@PathVariable Long employerId,
@@ -36,28 +39,28 @@ public class EmployerController {
                                                        @PathVariable Long taskId,
                                                        @Valid @RequestBody TaskCreateRequest request) {
         taskService.updateTask(employerId, taskId, request);
-        return ResponseEntity.ok(ApiResponse.success("更新成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("更新成功"));
     }
 
     @DeleteMapping("/{employerId}/tasks/{taskId}")
     public ResponseEntity<ApiResponse<Void>> deleteTask(@PathVariable Long employerId,
                                                        @PathVariable Long taskId) {
         taskService.deleteTask(employerId, taskId);
-        return ResponseEntity.ok(ApiResponse.success("删除成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("删除成功"));
     }
 
     @PostMapping("/{employerId}/tasks/{taskId}/publish")
     public ResponseEntity<ApiResponse<Void>> publishTask(@PathVariable Long employerId,
                                                         @PathVariable Long taskId) {
         taskService.publishTask(employerId, taskId);
-        return ResponseEntity.ok(ApiResponse.success("发布成功，等待平台审核"));
+        return ResponseEntity.ok(ApiResponse.successMessage("发布成功，等待平台审核"));
     }
 
     @PostMapping("/{employerId}/tasks/{taskId}/offline")
     public ResponseEntity<ApiResponse<Void>> offlineTask(@PathVariable Long employerId,
                                                         @PathVariable Long taskId) {
         taskService.offlineTask(employerId, taskId);
-        return ResponseEntity.ok(ApiResponse.success("下架成功"));
+        return ResponseEntity.ok(ApiResponse.successMessage("下架成功"));
     }
 
     @GetMapping("/{employerId}/tasks")
@@ -84,14 +87,14 @@ public class EmployerController {
     public ResponseEntity<ApiResponse<Void>> auditOrder(@PathVariable Long employerId,
                                                        @Valid @RequestBody OrderAuditRequest request) {
         orderService.auditOrder(employerId, request);
-        return ResponseEntity.ok(ApiResponse.success("审核完成"));
+        return ResponseEntity.ok(ApiResponse.successMessage("审核完成"));
     }
 
     @PostMapping("/{employerId}/orders/batch-audit")
     public ResponseEntity<ApiResponse<Void>> batchAuditOrder(@PathVariable Long employerId,
                                                             @Valid @RequestBody OrderAuditRequest request) {
         orderService.batchAuditOrder(employerId, request);
-        return ResponseEntity.ok(ApiResponse.success("批量审核完成"));
+        return ResponseEntity.ok(ApiResponse.successMessage("批量审核完成"));
     }
 
     @GetMapping("/{employerId}/balance")

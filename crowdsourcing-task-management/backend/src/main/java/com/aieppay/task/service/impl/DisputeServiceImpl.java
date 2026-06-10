@@ -6,7 +6,6 @@ import com.aieppay.task.exception.ServiceException;
 import com.aieppay.task.mapper.DisputeInfoMapper;
 import com.aieppay.task.mapper.OrderInfoMapper;
 import com.aieppay.task.service.DisputeService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,13 +13,16 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
-@RequiredArgsConstructor
 public class DisputeServiceImpl implements DisputeService {
 
-    private final DisputeInfoMapper disputeInfoMapper;
-    private final OrderInfoMapper orderInfoMapper;
+    @Autowired
+
+    private DisputeInfoMapper disputeInfoMapper;
+    @Autowired
+    private OrderInfoMapper orderInfoMapper;
 
     @Override
     @Transactional

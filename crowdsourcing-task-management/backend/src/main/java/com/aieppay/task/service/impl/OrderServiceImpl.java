@@ -12,22 +12,26 @@ import com.aieppay.task.mapper.TaskInfoMapper;
 import com.aieppay.task.mapper.UserInfoMapper;
 import com.aieppay.task.service.FundService;
 import com.aieppay.task.service.OrderService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
-@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-    private final OrderInfoMapper orderInfoMapper;
-    private final TaskInfoMapper taskInfoMapper;
-    private final UserInfoMapper userInfoMapper;
-    private final FundService fundService;
+    @Autowired
+
+    private OrderInfoMapper orderInfoMapper;
+    @Autowired
+    private TaskInfoMapper taskInfoMapper;
+    @Autowired
+    private UserInfoMapper userInfoMapper;
+    @Autowired
+    private FundService fundService;
 
     @Override
     @Transactional
